@@ -27,6 +27,11 @@ const Heap = class {
     return this.#contents.length;
   }
 
+  /** @type {boolean} */
+  get empty () {
+    return (this.length === 0);
+  }
+
 
   /** @type {number} */
   static get #rootIndex () {
@@ -131,6 +136,14 @@ const Heap = class {
     }
 
     return this.length;
+  }
+
+  /**
+   * @returns {undefined}
+   * @complexity O(logN)
+   */
+  update () {
+    this.#percolateDown();
   }
 
   /**
