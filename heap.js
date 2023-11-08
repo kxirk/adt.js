@@ -8,9 +8,9 @@ const Heap = class {
 
   /**
    * @param {Function} comparator
-   * @param {Function} sorter
+   * @param {Function} [sorter]
    */
-  constructor (comparator, sorter) {
+  constructor (comparator, sorter = comparator) {
     this.#contents = [];
     this.#comparator = comparator;
     this.#sorter = sorter;
@@ -23,13 +23,18 @@ const Heap = class {
   }
 
   /** @type {number} */
-  get length () {
+  get size () {
     return this.#contents.length;
+  }
+
+  /** @type {number} */
+  get #lastIndex () {
+    return (this.size - 1);
   }
 
   /** @type {boolean} */
   get empty () {
-    return (this.length === 0);
+    return (this.size === 0);
   }
 
 
@@ -84,43 +89,45 @@ const Heap = class {
   }
 
   /**
+   * @param {number} index
    * @returns {undefined}
    */
-  #percolateUp () {
-    let currentIndex = (this.length - 1);
+  #percolateUp (index) {
+    let current = index;
     while (
-      (currentIndex > Heap.#rootIndex)
-      && this.#compare(currentIndex, Heap.#parentIndex(currentIndex))
+      (current > Heap.#rootIndex)
+      && this.#compare(current, Heap.#parentIndex(current))
     ) {
-      this.#swap(currentIndex, Heap.#parentIndex(currentIndex));
-      currentIndex = Heap.#parentIndex(currentIndex);
+      this.#swap(current, Heap.#parentIndex(current));
+      current = Heap.#parentIndex(current);
     }
   }
 
   /**
+   * @param {number} index
    * @returns {undefined}
    */
-  #percolateDown () {
-    let currentIndex = Heap.#rootIndex;
+  #percolateDown (index) {
+    let current = index;
     while (
       (
-        (Heap.#leftIndex(currentIndex) < this.length)
-        && this.#compare(Heap.#leftIndex(currentIndex), currentIndex)
+        (Heap.#leftIndex(current) < this.size)
+        && this.#compare(Heap.#leftIndex(current), current)
       )
       || (
-        (Heap.#rightIndex(currentIndex) < this.length)
-        && this.#compare(Heap.#rightIndex(currentIndex), currentIndex)
+        (Heap.#rightIndex(current) < this.size)
+        && this.#compare(Heap.#rightIndex(current), current)
       )
     ) {
-      const maxChildIndex = (
-        (Heap.#rightIndex(currentIndex) < this.length)
-        && (this.#compare(Heap.#rightIndex(currentIndex), Heap.#leftIndex(currentIndex)))
+      const childIndex = (
+        (Heap.#rightIndex(current) < this.size)
+        && (this.#compare(Heap.#rightIndex(current), Heap.#leftIndex(current)))
       )
-        ? Heap.#rightIndex(currentIndex)
-        : Heap.#leftIndex(currentIndex);
+        ? Heap.#rightIndex(current)
+        : Heap.#leftIndex(current);
 
-      this.#swap(currentIndex, maxChildIndex);
-      currentIndex = maxChildIndex;
+      this.#swap(current, childIndex);
+      current = childIndex;
     }
   }
 
@@ -129,13 +136,13 @@ const Heap = class {
    * @returns {number}
    * @complexity O(logN)
    */
-  insert (...elements) {
+  add (...elements) {
     for (const element of elements) {
       this.#contents.push(element);
-      this.#percolateUp();
+      this.#percolateUp(this.#lastIndex);
     }
 
-    return this.length;
+    return this.size;
   }
 
   /**
@@ -143,7 +150,7 @@ const Heap = class {
    * @complexity O(logN)
    */
   update () {
-    this.#percolateDown();
+    this.#percolateDown(Heap.#rootIndex);
   }
 
   /**
@@ -153,15 +160,21 @@ const Heap = class {
   remove () {
     const element = this.next;
 
-    const bottomIndex = (this.length - 1);
-    if (bottomIndex > Heap.#rootIndex) {
-      this.#swap(Heap.#rootIndex, bottomIndex);
+    if (this.#lastIndex > Heap.#rootIndex) {
+      this.#swap(Heap.#rootIndex, this.#lastIndex);
     }
-
     this.#contents.pop();
-    this.#percolateDown();
+    this.#percolateDown(Heap.#rootIndex);
 
     return element;
+  }
+
+  /**
+   * @returns {undefined}
+   * @complexity O(1)
+   */
+  clear () {
+    this.#contents.length = 0;
   }
 
 
