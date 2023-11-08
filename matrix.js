@@ -1,8 +1,3 @@
-/**
- * @typedef pos
- * @type {number[]} [y, x]
- */
-
 const Matrix = class extends Array {
   /**
    * @param {number} [height]
@@ -44,6 +39,10 @@ const Matrix = class extends Array {
     return super.at(y).at(x);
   }
 
+  /**
+   * @typedef pos
+   * @type {number[]} [y, x]
+   */
   /**
    * @param {*} value
    * @param {pos} [start]
