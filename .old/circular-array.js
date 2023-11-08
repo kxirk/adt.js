@@ -20,6 +20,4 @@ const CircularArray = class extends Array {
     });
   }
 };
-
-
 export default CircularArray;

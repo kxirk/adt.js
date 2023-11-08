@@ -49,6 +49,4 @@ const CircularQueue = class extends Queue {
     return this.length;
   }
 };
-
-
 export default CircularQueue;

@@ -182,6 +182,4 @@ const LinkedList = class {
     };
   }
 };
-
-
 export default LinkedList;

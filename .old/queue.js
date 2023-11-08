@@ -44,6 +44,4 @@ const Queue = class {
     return this.#contents[Symbol.iterator]();
   }
 };
-
-
 export default Queue;

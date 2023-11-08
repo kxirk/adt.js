@@ -41,6 +41,4 @@ const Stack = class {
     return this.#contents.reverse()[Symbol.iterator]();
   }
 };
-
-
 export default Stack;

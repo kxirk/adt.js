@@ -22,6 +22,4 @@ const Node = class {
   get next () { return this.#next; }
   set next (node) { this.#next = node; }
 };
-
-
 export default Node;
