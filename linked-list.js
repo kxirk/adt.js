@@ -49,7 +49,7 @@ const LinkedList = class {
    * @complexity O(N)
    */
   #removeNode (index) {
-    if ((this.length === 0) || (index > this.length - 1)) return;
+    if ((this.length === 0) || (index > this.length - 1)) return null;
 
     let removed;
     if (index === 0) {
