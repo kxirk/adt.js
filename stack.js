@@ -3,36 +3,44 @@ const Stack = class {
   #contents;
 
   constructor () {
-    this.#contents = [];
+    this.clear();
   }
 
-
-  /** @type {number} */
-  get length () {
-    return this.#contents.length;
-  }
 
   /** @type {*} */
   get next () {
-    return this.#contents.last;
+    return this.#contents[this.size - 1];
+  }
+
+  /** @type {number} */
+  get size () {
+    return this.#contents.length;
   }
 
 
   /**
-   * @param {...*} elements
+   * @param {...*} data
    * @returns {number}
    * @complexity O(1)
    */
-  push (...elements) {
-    return this.#contents.push(...elements);
+  add (...data) {
+    return this.#contents.push(...data);
   }
 
   /**
    * @returns {*}
    * @complexity O(1)
    */
-  pop () {
+  remove () {
     return this.#contents.pop();
+  }
+
+  /**
+   * @returns {undefined}
+   * @complexity O(1)
+   */
+  clear () {
+    this.#contents = [];
   }
 
 
