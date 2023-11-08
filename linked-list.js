@@ -7,17 +7,22 @@ const LinkedList = class {
   /** @type {Node} */
   #tail;
   /** @type {number} */
-  #length;
+  #size;
 
   constructor () {
     this.#head = null;
     this.#tail = null;
-    this.#length = 0;
+    this.#size = 0;
   }
 
 
   /** @type {number} */
-  get length () { return this.#length; }
+  get size () { return this.#size; }
+
+  /** @type {number} */
+  get #lastIndex () {
+    return (this.size - 1);
+  }
 
 
   /**
@@ -49,7 +54,7 @@ const LinkedList = class {
    * @complexity O(N)
    */
   #removeNode (index) {
-    if ((this.length === 0) || (index > this.length - 1)) return null;
+    if ((this.size === 0) || (index > this.#lastIndex)) return null;
 
     let removed;
     if (index === 0) {
@@ -58,7 +63,7 @@ const LinkedList = class {
       if (removed.next === null) this.#tail = removed.next;
       this.#head = removed.next;
     }
-    else if (index === this.length - 1) {
+    else if (index === this.#lastIndex) {
       const prev = this.#getNode(index - 1);
       removed = this.#tail;
 
@@ -73,7 +78,7 @@ const LinkedList = class {
 
       prev.next = next;
     }
-    this.#length--;
+    this.#size--;
 
     return removed;
   }
@@ -93,11 +98,11 @@ const LinkedList = class {
    * @returns {number}
    * @complexity O(N)
    */
-  insert (data, index = this.length) {
-    if (index > this.length) return this.length;
+  insert (data, index = this.size) {
+    if (index > this.size) return this.size;
 
     const node = new Node(data);
-    if (this.length === 0) {
+    if (this.size === 0) {
       this.#head = node;
       this.#tail = node;
     }
@@ -105,7 +110,7 @@ const LinkedList = class {
       node.next = this.#head;
       this.#head = node;
     }
-    else if (index === this.length) {
+    else if (index === this.size) {
       const prev = this.#tail;
 
       prev.next = node;
@@ -119,21 +124,21 @@ const LinkedList = class {
       node.next = next;
     }
 
-    return ++this.#length;
+    return ++this.#size;
   }
 
 
   /**
-   * @param {...*} elements
+   * @param {...*} data
    * @returns {number}
    * @complexity O(1)
    */
-  push (...elements) {
-    for (const element of elements) {
-      this.insert(element, this.length);
+  push (...data) {
+    for (const element of data) {
+      this.insert(element, this.size);
     }
 
-    return this.length;
+    return this.size;
   }
 
   /**
@@ -141,7 +146,7 @@ const LinkedList = class {
    * @complexity O(1)
    */
   pop () {
-    return this.remove(this.length - 1);
+    return this.remove(this.#lastIndex);
   }
 
   /**
@@ -153,16 +158,16 @@ const LinkedList = class {
   }
 
   /**
-   * @param {...*} elements
+   * @param {...*} data
    * @returns {number}
    * @complexity O(1)
    */
-  unshift (...elements) {
-    for (const element of elements.reverse()) {
+  unshift (...data) {
+    for (const element of data.reverse()) {
       this.insert(element, 0);
     }
 
-    return this.length;
+    return this.size;
   }
 
 
