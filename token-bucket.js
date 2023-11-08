@@ -3,11 +3,11 @@ const TokenBucket = class {
   #rate;
   /** @type {number} */
   #per;
+  /** @type {number} */
+  #allowance;
 
   /** @type {number} */
   #last;
-  /** @type {number} */
-  #allowance;
 
   /**
    * @param {number} rate
@@ -17,9 +17,9 @@ const TokenBucket = class {
   constructor (rate, per, last = 0) {
     this.rate = rate;
     this.per = per;
+    this.allowance = rate;
 
     this.last = last;
-    this.allowance = rate;
   }
 
 
@@ -31,22 +31,21 @@ const TokenBucket = class {
   get per () { return this.#per; }
   set per (per) { this.#per = per; }
 
-
-  /** @type {number} */
-  get last () { return this.#last; }
-  set last (last) { this.#last = last; }
-
   /** @type {number} */
   get allowance () { return this.#allowance; }
   set allowance (allowance) {
     this.#allowance = Math.max(0, Math.min(allowance, this.rate));
   }
 
-
   /** @type {number} */
   get utilization () {
     return (this.rate - this.allowance) / this.rate;
   }
+
+
+  /** @type {number} */
+  get last () { return this.#last; }
+  set last (last) { this.#last = last; }
 
 
   /**
