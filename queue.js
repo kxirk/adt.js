@@ -3,45 +3,53 @@ import LinkedList from "./linked-list.js";
 
 const Queue = class {
   /** @type {LinkedList} */
-  #contents;
+  #list;
 
   constructor () {
-    this.#contents = new LinkedList();
+    this.#list = new LinkedList();
   }
 
 
   /** @type {*} */
   get next () {
-    return this.#contents.get(0);
+    return this.#list.get(0);
   }
 
   /** @type {number} */
-  get length () {
-    return this.#contents.length;
+  get size () {
+    return this.#list.size;
   }
 
 
   /**
-   * @param {...*} elements
+   * @param {...*} data
    * @returns {number}
    * @complexity O(1)
    */
-  push (...elements) {
-    return this.#contents.push(...elements);
+  add (...data) {
+    return this.#list.push(...data);
   }
 
   /**
    * @returns {*}
    * @complexity O(1)
    */
-  shift () {
-    return this.#contents.shift();
+  remove () {
+    return this.#list.shift();
+  }
+
+  /**
+   * @returns {undefined}
+   * @complexity O(1)
+   */
+  clear () {
+    this.#list.clear();
   }
 
 
   /** @type {Function} */
   [Symbol.iterator] () {
-    return this.#contents[Symbol.iterator]();
+    return this.#list[Symbol.iterator]();
   }
 };
 export default Queue;
