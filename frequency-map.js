@@ -3,7 +3,7 @@ const FrequencyMap = class extends Map {
    * @returns {number}
    */
   get valuesTotal () {
-    return Array.from(this.values()).reduce((acc, value) => (acc + value), 0);
+    return Array.from(this.values()).reduce((total, value) => (total + value), 0);
   }
 
 
@@ -21,15 +21,17 @@ const FrequencyMap = class extends Map {
    * @returns {number}
    */
   getCumulative (key, keyIncluded = true) {
-    let cumulative = 0;
+    let total = 0;
     for (const [keyThis, value] of this) {
       if (keyThis === key) {
-        if (keyIncluded) return (cumulative + value);
-        return cumulative;
+        if (keyIncluded) total += value;
+        break;
       }
 
-      cumulative += value;
+      total += value;
     }
+
+    return total;
   }
 
   /**
@@ -47,7 +49,7 @@ const FrequencyMap = class extends Map {
    * @param {boolean} [valueIncluded]
    * @returns {*[]}
    */
-  keysLessThan (value, valueIncluded = false) {
+  keysLess (value, valueIncluded = false) {
     const keys = [];
 
     for (const [key, valueThis] of this) {
@@ -62,7 +64,7 @@ const FrequencyMap = class extends Map {
    * @param {boolean} [valueIncluded]
    * @returns {*[]}
    */
-  keysGreaterThan (value, valueIncluded = false) {
+  keysGreater (value, valueIncluded = false) {
     const keys = [];
 
     for (const [key, valueThis] of this) {
@@ -73,14 +75,14 @@ const FrequencyMap = class extends Map {
   }
 
   /**
-   * @param {Interval} [interval]
+   * @param {Range} [range]
    * @returns {*[]}
    */
-  keysOnInterval (interval = []) {
+  keysIncluded (range = []) {
     const keys = [];
 
     for (const [key, value] of this) {
-      if ( interval.includes(value) ) keys.push(key);
+      if ( range.includes(value) ) keys.push(key);
     }
 
     return keys;
