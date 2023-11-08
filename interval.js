@@ -83,6 +83,4 @@ const Interval = class {
     };
   }
 };
-
-
 export default Interval;

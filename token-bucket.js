@@ -65,6 +65,4 @@ const TokenBucket = class {
     return allowed;
   }
 };
-
-
 export default TokenBucket;

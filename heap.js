@@ -172,6 +172,4 @@ const Heap = class {
     return array[Symbol.iterator]();
   }
 };
-
-
 export default Heap;

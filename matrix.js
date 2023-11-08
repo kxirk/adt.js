@@ -57,6 +57,4 @@ const Matrix = class extends Array {
     return this;
   }
 };
-
-
 export default Matrix;

@@ -6,6 +6,4 @@ const Record = class {
     return Object.setPrototypeOf(Object.assign(object), null);
   }
 };
-
-
 export default Record;

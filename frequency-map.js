@@ -101,6 +101,4 @@ const FrequencyMap = class extends Map {
     return normalized;
   }
 };
-
-
 export default FrequencyMap;

@@ -50,6 +50,4 @@ const PriorityQueue = class {
     return this.#contents[Symbol.iterator]();
   }
 };
-
-
 export default PriorityQueue;
