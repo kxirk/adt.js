@@ -10,9 +10,7 @@ const LinkedList = class {
   #size;
 
   constructor () {
-    this.#head = null;
-    this.#tail = null;
-    this.#size = 0;
+    this.clear();
   }
 
 
@@ -168,6 +166,16 @@ const LinkedList = class {
     }
 
     return this.size;
+  }
+
+  /**
+   * @returns {undefined}
+   * @complexity O(1)
+   */
+  clear () {
+    this.#head = null;
+    this.#tail = null;
+    this.#size = 0;
   }
 
 
