@@ -9,6 +9,7 @@ const Record = class {
       get () {
         return this.keys().length;
       },
+      configurable: true,
       enumerable: false
     });
 
@@ -16,6 +17,7 @@ const Record = class {
       value () {
         return Object.entries(this);
       },
+      configurable: true,
       enumerable: false
     });
 
@@ -23,6 +25,7 @@ const Record = class {
       value (key) {
         return (this[key] !== undefined);
       },
+      configurable: true,
       enumerable: false
     });
 
@@ -30,6 +33,7 @@ const Record = class {
       value () {
         return Object.keys(this);
       },
+      configurable: true,
       enumerable: false
     });
 
@@ -37,6 +41,7 @@ const Record = class {
       value () {
         return Object.values(this);
       },
+      configurable: true,
       enumerable: false
     });
 
