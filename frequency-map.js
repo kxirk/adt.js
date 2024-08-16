@@ -1,4 +1,4 @@
-const FrequencyMap = class extends Map {
+const FrequencyMap = class extends Map /* <*, number>> */ {
   /**
    * @returns {number}
    */
@@ -101,6 +101,29 @@ const FrequencyMap = class extends Map {
     }
 
     return normalized;
+  }
+
+  /**
+   * @returns {FrequencyMap}
+   */
+  cumulative () {
+    const cumulative = new FrequencyMap();
+
+    let acc = 0;
+    for (const [key, value] of this) {
+      acc += value;
+      cumulative.set(key, acc);
+    }
+
+    return cumulative;
+  }
+
+  /**
+   * @param {number} [divisor]
+   * @returns {FrequencyMap}
+   */
+  cumulativeRelative (divisor = this.valuesTotal) {
+    return this.cumulative().relative(divisor);
   }
 };
 export default FrequencyMap;
