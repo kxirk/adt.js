@@ -6,6 +6,5 @@ export { default as Node } from "./node.js";
 export { default as PriorityQueue } from "./priority-queue.js";
 export { default as Queue } from "./queue.js";
 export { default as Range } from "./range.js";
-export { default as Record } from "./record.js";
 export { default as Stack } from "./stack.js";
 export { default as TokenBucket } from "./token-bucket.js";
