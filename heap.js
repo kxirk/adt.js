@@ -178,7 +178,7 @@ const Heap = class {
   }
 
 
-  /** @type {Function} */
+  /** @type {Iterator.<*>} */
   [Symbol.iterator] () {
     const array = [...this.#contents].sort(this.#sorter);
 

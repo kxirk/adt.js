@@ -59,7 +59,7 @@ const PriorityQueue = class {
   }
 
 
-  /** @type {Function} */
+  /** @type {Iterator.<*>} */
   [Symbol.iterator] () {
     return this.#heap[Symbol.iterator]();
   }

@@ -40,7 +40,7 @@ const Range = class {
   }
 
 
-  /** @type {Function} */
+  /** @type {Iterator.<number>} */
   [Symbol.iterator] () {
     let value = this.min;
 

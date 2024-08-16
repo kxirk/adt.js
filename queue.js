@@ -47,7 +47,7 @@ const Queue = class {
   }
 
 
-  /** @type {Function} */
+  /** @type {Iterator.<*>} */
   [Symbol.iterator] () {
     return this.#list[Symbol.iterator]();
   }

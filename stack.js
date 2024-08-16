@@ -44,7 +44,7 @@ const Stack = class {
   }
 
 
-  /** @type {Function} */
+  /** @type {Iterator.<*>} */
   [Symbol.iterator] () {
     return this.#contents.reverse()[Symbol.iterator]();
   }
