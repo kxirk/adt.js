@@ -53,7 +53,7 @@ const FrequencyMap = class extends Map /* <*, number> */ {
     const keys = [];
 
     for (const [key, valueThis] of this) {
-      if ( (valueIncluded ? (valueThis <= value) : (valueThis < value)) ) keys.push(key);
+      if (valueIncluded ? (valueThis <= value) : (valueThis < value)) keys.push(key);
     }
 
     return keys;
@@ -68,7 +68,7 @@ const FrequencyMap = class extends Map /* <*, number> */ {
     const keys = [];
 
     for (const [key, valueThis] of this) {
-      if ( (valueIncluded ? (valueThis >= value) : (valueThis > value)) ) keys.push(key);
+      if (valueIncluded ? (valueThis >= value) : (valueThis > value)) keys.push(key);
     }
 
     return keys;
@@ -82,7 +82,7 @@ const FrequencyMap = class extends Map /* <*, number> */ {
     const keys = [];
 
     for (const [key, value] of this) {
-      if ( range.includes(value) ) keys.push(key);
+      if (range.includes(value)) keys.push(key);
     }
 
     return keys;
