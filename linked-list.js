@@ -179,7 +179,7 @@ const LinkedList = class {
   }
 
 
-  /** @type {Iterator.<*>} */
+  /** @type {Iterator<*>} */
   [Symbol.iterator] () {
     let next = new Node(null, this.#head);
 

@@ -39,14 +39,11 @@ const Matrix = class extends Array {
     return super.at(y).at(x);
   }
 
-  /**
-   * @typedef pos
-   * @type {number[]} [y, x]
-   */
+  /** @typedef {number[]} Position [y, x] */
   /**
    * @param {*} value
-   * @param {pos} [start]
-   * @param {pos} [end]
+   * @param {Position} [start]
+   * @param {Position} [end]
    * @returns {Matrix}
    */
   fill (value, start = [0, 0], end = [this.height, this.width]) {

@@ -1,4 +1,4 @@
-const FrequencyMap = class extends Map /* <*, number>> */ {
+const FrequencyMap = class extends Map /* <*, number> */ {
   /**
    * @returns {number}
    */
