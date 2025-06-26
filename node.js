@@ -1,24 +1,25 @@
+/**
+ * @template T
+ */
 const Node = class {
-  /** @type {*} */
-  #data;
-  /** @type {Node} */
-  #next;
+  /** @type {T} */ #data;
+  /** @type {Node<T>} */ #next;
 
   /**
-   * @param {*} data
-   * @param {Node} [next]
+   * @param {T} data
+   * @param {?Node<T>} [next]
    */
   constructor (data, next = null) {
-    this.data = data;
-    this.next = next;
+    this.#data = data;
+    this.#next = next;
   }
 
 
-  /** @type {*} */
+  /** @type {T} */
   get data () { return this.#data; }
   set data (data) { this.#data = data; }
 
-  /** @type {Node} */
+  /** @type {Node<T>} */
   get next () { return this.#next; }
   set next (node) { this.#next = node; }
 };

@@ -1,13 +1,9 @@
 const TokenBucket = class {
-  /** @type {number} */
-  #rate;
-  /** @type {number} */
-  #per;
-  /** @type {number} */
-  #allowance;
+  /** @type {number} */ #rate;
+  /** @type {number} */ #per;
+  /** @type {number} */ #allowance;
 
-  /** @type {number} */
-  #last;
+  /** @type {number} */ #last;
 
   /**
    * @param {number} rate
@@ -15,11 +11,11 @@ const TokenBucket = class {
    * @param {number} [last]
    */
   constructor (rate, per, last = 0) {
-    this.rate = rate;
-    this.per = per;
+    this.#rate = rate;
+    this.#per = per;
     this.allowance = rate;
 
-    this.last = last;
+    this.#last = last;
   }
 
 
@@ -39,7 +35,7 @@ const TokenBucket = class {
 
   /** @type {number} */
   get utilization () {
-    return (this.rate - this.allowance) / this.rate;
+    return ((this.rate - this.allowance) / this.rate);
   }
 
 
@@ -50,7 +46,7 @@ const TokenBucket = class {
 
   /**
    * @param {number} current
-   * @returns {boolean}
+   * @returns {boolean} allowed
    */
   next (current) {
     const passed = (current - this.last);

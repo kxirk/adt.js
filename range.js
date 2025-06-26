@@ -1,10 +1,7 @@
 const Range = class {
-  /** @type {number} */
-  #min;
-  /** @type {number} */
-  #max;
-  /** @type {number} */
-  #step;
+  /** @type {number} */ #min;
+  /** @type {number} */ #max;
+  /** @type {number} */ #step;
 
   /**
    * @param {number} min
@@ -12,9 +9,9 @@ const Range = class {
    * @param {number} [step]
    */
   constructor (min, max = Infinity, step = 1) {
-    this.min = min;
-    this.max = max;
-    this.step = step;
+    this.#min = min;
+    this.#max = max;
+    this.#step = step;
   }
 
 
@@ -36,26 +33,20 @@ const Range = class {
    * @returns {boolean}
    */
   includes (number) {
-    return (number >= this.min) && (number < this.max);
+    return ((number >= this.min) && (number < this.max));
   }
 
 
-  /** @type {Iterator<number>} */
-  [Symbol.iterator] () {
+  /**
+   * @returns {Iterator<number>}
+   */
+  * [Symbol.iterator] () {
     let value = this.min;
 
-    return {
-      next: () => {
-        if (value < this.max) {
-          const result = { value, done: false };
-          value += this.step;
-
-          return result;
-        }
-
-        return { value, done: true };
-      }
-    };
+    while (value < this.max) {
+      yield value;
+      value += this.step;
+    }
   }
 };
 export default Range;

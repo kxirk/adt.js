@@ -1,10 +1,38 @@
+/**
+ * @template T
+ */
 const Heap = class {
-  /** @type {*[]} */
-  #contents;
-  /** @type {Function} */
-  #comparator;
-  /** @type {Function} */
-  #sorter;
+  /** @type {number} */
+  static get #rootIndex () { return 0; }
+
+  /**
+   * @param {number} index
+   * @returns {number}
+   */
+  static #parentIndex (index) {
+    return Math.floor((index - 1) / 2);
+  }
+
+  /**
+   * @param {number} index
+   * @returns {number}
+   */
+  static #leftIndex (index) {
+    return ((index * 2) + 1);
+  }
+
+  /**
+   * @param {number} index
+   * @returns {number}
+   */
+  static #rightIndex (index) {
+    return (Heap.#leftIndex(index) + 1);
+  }
+
+
+  /** @type {T[]} */ #contents;
+  /** @type {Function} */ #comparator;
+  /** @type {Function} */ #sorter;
 
   /**
    * @param {Function} comparator
@@ -17,7 +45,12 @@ const Heap = class {
   }
 
 
-  /** @type {*} */
+  /** @type {number} */
+  get #lastIndex () {
+    return (this.size - 1);
+  }
+
+  /** @type {T} */
   get next () {
     return this.#contents[0];
   }
@@ -27,44 +60,9 @@ const Heap = class {
     return this.#contents.length;
   }
 
-  /** @type {number} */
-  get #lastIndex () {
-    return (this.size - 1);
-  }
-
   /** @type {boolean} */
   get empty () {
     return (this.size === 0);
-  }
-
-
-  /** @type {number} */
-  static get #rootIndex () {
-    return 0;
-  }
-
-  /**
-   * @param {number} index
-   * @returns {number}
-   */
-  static #leftIndex (index) {
-    return (index * 2) + 1;
-  }
-
-  /**
-   * @param {number} index
-   * @returns {number}
-   */
-  static #rightIndex (index) {
-    return (index * 2) + 2;
-  }
-
-  /**
-   * @param {number} index
-   * @returns {number}
-   */
-  static #parentIndex (index) {
-    return Math.floor((index - 1) / 2);
   }
 
 
@@ -80,7 +78,7 @@ const Heap = class {
   /**
    * @param {number} a
    * @param {number} b
-   * @returns {Heap}
+   * @returns {this}
    */
   #swap (a, b) {
     [this.#contents[a], this.#contents[b]] = [this.#contents[b], this.#contents[a]];
@@ -121,7 +119,7 @@ const Heap = class {
     ) {
       const childIndex = (
         (Heap.#rightIndex(current) < this.size)
-        && (this.#compare(Heap.#rightIndex(current), Heap.#leftIndex(current)))
+        && this.#compare(Heap.#rightIndex(current), Heap.#leftIndex(current))
       )
         ? Heap.#rightIndex(current)
         : Heap.#leftIndex(current);
@@ -132,8 +130,17 @@ const Heap = class {
   }
 
   /**
-   * @param {...*} elements
-   * @returns {number}
+   * @returns {undefined}
+   * @complexity O(logN)
+   */
+  update () {
+    this.#percolateDown(Heap.#rootIndex);
+  }
+
+
+  /**
+   * @param {...T} elements
+   * @returns {number} size
    * @complexity O(logN)
    */
   add (...elements) {
@@ -146,15 +153,7 @@ const Heap = class {
   }
 
   /**
-   * @returns {undefined}
-   * @complexity O(logN)
-   */
-  update () {
-    this.#percolateDown(Heap.#rootIndex);
-  }
-
-  /**
-   * @returns {*}
+   * @returns {T}
    * @complexity O(logN)
    */
   remove () {
@@ -169,6 +168,7 @@ const Heap = class {
     return element;
   }
 
+
   /**
    * @returns {undefined}
    * @complexity O(1)
@@ -178,11 +178,11 @@ const Heap = class {
   }
 
 
-  /** @type {Iterator<*>} */
+  /**
+   * @returns {Iterator<T>}
+   */
   [Symbol.iterator] () {
-    const array = [...this.#contents].sort(this.#sorter);
-
-    return array[Symbol.iterator]();
+    return Array.from(this.#contents).sort(this.#sorter).values();
   }
 };
 export default Heap;

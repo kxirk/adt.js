@@ -1,3 +1,7 @@
+/**
+ * @template T
+ * @extends Array
+ */
 const Matrix = class extends Array {
   /**
    * @param {number} [height]
@@ -22,7 +26,9 @@ const Matrix = class extends Array {
   }
 
   /** @type {number} */
-  get width () { return (this[0]?.length ?? 0); }
+  get width () {
+    return (this[0]?.length ?? 0);
+  }
   set width (width) {
     for (let y = 0; y < this.height; y++) {
       this[y].length = width;
@@ -33,24 +39,31 @@ const Matrix = class extends Array {
   /**
    * @param {number} y
    * @param {number} x
-   * @returns {*}
+   * @returns {T}
    */
   at (y, x) {
     return super.at(y).at(x);
   }
 
-  /** @typedef {number[]} Position [y, x] */
+  /** @typedef {[number, number]} Position [y, x] */
   /**
-   * @param {*} value
+   * @param {T} value
    * @param {Position} [start]
    * @param {Position} [end]
-   * @returns {Matrix}
+   * @returns {this}
    */
   fill (value, start = [0, 0], end = [this.height, this.width]) {
     for (let y = start[0]; y < end[0]; y++) {
       this[y].fill(value, start[1], end[1]);
     }
     return this;
+  }
+
+  /**
+   * @returns {T[]}
+   */
+  flat () {
+    return Array.from(this).flat(2);
   }
 };
 export default Matrix;

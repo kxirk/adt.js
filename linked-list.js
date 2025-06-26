@@ -1,13 +1,13 @@
 import Node from "./node.js";
 
 
+/**
+ * @template T
+ */
 const LinkedList = class {
-  /** @type {Node} */
-  #head;
-  /** @type {Node} */
-  #tail;
-  /** @type {number} */
-  #size;
+  /** @type {Node<T>} */ #head;
+  /** @type {Node<T>} */ #tail;
+  /** @type {number} */ #size;
 
   constructor () {
     this.clear();
@@ -15,17 +15,17 @@ const LinkedList = class {
 
 
   /** @type {number} */
-  get size () { return this.#size; }
-
-  /** @type {number} */
   get #lastIndex () {
     return (this.size - 1);
   }
 
+  /** @type {number} */
+  get size () { return this.#size; }
+
 
   /**
    * @param {number} index
-   * @returns {Node}
+   * @returns {Node<T>}
    * @complexity O(N)
    */
   #getNode (index) {
@@ -39,16 +39,79 @@ const LinkedList = class {
 
   /**
    * @param {number} index
-   * @returns {*}
+   * @returns {T}
    * @complexity O(N)
    */
   get (index) {
     return this.#getNode(index)?.data;
   }
 
+
+  /**
+   * @param {T} data
+   * @param {number} [index]
+   * @returns {number} size
+   * @complexity O(N)
+   */
+  insert (data, index = this.size) {
+    if (index > this.size) return this.size;
+
+    const node = new Node(data);
+    if (this.size === 0) {
+      this.#head = node;
+      this.#tail = node;
+    }
+    else if (index === 0) {
+      node.next = this.#head;
+      this.#head = node;
+    }
+    else if (index === this.size) {
+      const prev = this.#tail;
+
+      prev.next = node;
+      this.#tail = node;
+    }
+    else {
+      const prev = this.#getNode(index - 1);
+      const next = prev.next;
+
+      prev.next = node;
+      node.next = next;
+    }
+
+    return ++this.#size;
+  }
+
+  /**
+   * @param {...T} data
+   * @returns {number} size
+   * @complexity O(1)
+   */
+  push (...data) {
+    for (const element of data) {
+      this.insert(element, this.size);
+    }
+
+    return this.size;
+  }
+
+  /**
+   * @param {...T} data
+   * @returns {number} size
+   * @complexity O(1)
+   */
+  unshift (...data) {
+    for (const element of data.reverse()) {
+      this.insert(element, 0);
+    }
+
+    return this.size;
+  }
+
+
   /**
    * @param {number} index
-   * @returns {Node}
+   * @returns {Node<T>}
    * @complexity O(N)
    */
   #removeNode (index) {
@@ -83,7 +146,7 @@ const LinkedList = class {
 
   /**
    * @param {number} index
-   * @returns {*}
+   * @returns {T}
    * @complexity O(N)
    */
   remove (index) {
@@ -91,56 +154,7 @@ const LinkedList = class {
   }
 
   /**
-   * @param {*} data
-   * @param {number} [index]
-   * @returns {number}
-   * @complexity O(N)
-   */
-  insert (data, index = this.size) {
-    if (index > this.size) return this.size;
-
-    const node = new Node(data);
-    if (this.size === 0) {
-      this.#head = node;
-      this.#tail = node;
-    }
-    else if (index === 0) {
-      node.next = this.#head;
-      this.#head = node;
-    }
-    else if (index === this.size) {
-      const prev = this.#tail;
-
-      prev.next = node;
-      this.#tail = node;
-    }
-    else {
-      const prev = this.#getNode(index - 1);
-      const next = prev.next;
-
-      prev.next = node;
-      node.next = next;
-    }
-
-    return ++this.#size;
-  }
-
-
-  /**
-   * @param {...*} data
-   * @returns {number}
-   * @complexity O(1)
-   */
-  push (...data) {
-    for (const element of data) {
-      this.insert(element, this.size);
-    }
-
-    return this.size;
-  }
-
-  /**
-   * @returns {*}
+   * @returns {T}
    * @complexity O(1)
    */
   pop () {
@@ -148,25 +162,13 @@ const LinkedList = class {
   }
 
   /**
-   * @returns {*}
+   * @returns {T}
    * @complexity O(1)
    */
   shift () {
     return this.remove(0);
   }
 
-  /**
-   * @param {...*} data
-   * @returns {number}
-   * @complexity O(1)
-   */
-  unshift (...data) {
-    for (const element of data.reverse()) {
-      this.insert(element, 0);
-    }
-
-    return this.size;
-  }
 
   /**
    * @returns {undefined}
@@ -179,20 +181,16 @@ const LinkedList = class {
   }
 
 
-  /** @type {Iterator<*>} */
-  [Symbol.iterator] () {
-    let next = new Node(null, this.#head);
+  /**
+   * @returns {Iterator<T>}
+   */
+  * [Symbol.iterator] () {
+    let next = this.#head;
 
-    return {
-      next: () => {
-        next = next.next;
-
-        return {
-          done: next === null,
-          value: next?.data
-        };
-      }
-    };
+    while (next !== null) {
+      yield next.data;
+      next = next.next;
+    }
   }
 };
 export default LinkedList;

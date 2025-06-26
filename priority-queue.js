@@ -1,20 +1,22 @@
 import Heap from "./heap.js";
 
 
+/**
+ * @template T
+ */
 const PriorityQueue = class {
-  /** @type {Heap} */
-  #heap;
+  /** @type {Heap} */ #heap;
 
   /**
    * @param {Function} comparator
-   * @param {Function} sorter
+   * @param {Function} [sorter]
    */
   constructor (comparator, sorter) {
     this.#heap = new Heap(comparator, sorter);
   }
 
 
-  /** @type {*} */
+  /** @type {T} */
   get next () {
     return this.#heap.next;
   }
@@ -26,15 +28,6 @@ const PriorityQueue = class {
 
 
   /**
-   * @param {...*} elements
-   * @returns {number}
-   * @complexity O(logN)
-   */
-  add (...elements) {
-    return this.#heap.add(...elements);
-  }
-
-  /**
    * @returns {undefined}
    * @complexity O(logN)
    */
@@ -42,13 +35,24 @@ const PriorityQueue = class {
     this.#heap.update();
   }
 
+
   /**
-   * @returns {*}
+   * @param {...T} elements
+   * @returns {number} size
+   * @complexity O(logN)
+   */
+  add (...elements) {
+    return this.#heap.add(...elements);
+  }
+
+  /**
+   * @returns {T}
    * @complexity O(logN)
    */
   remove () {
     return this.#heap.remove();
   }
+
 
   /**
    * @returns {undefined}
@@ -59,7 +63,9 @@ const PriorityQueue = class {
   }
 
 
-  /** @type {Iterator<*>} */
+  /**
+   * @returns {Iterator<T>}
+   */
   [Symbol.iterator] () {
     return this.#heap[Symbol.iterator]();
   }

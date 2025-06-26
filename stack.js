@@ -1,13 +1,15 @@
+/**
+ * @template T
+ */
 const Stack = class {
-  /** @type {*[]} */
-  #contents;
+  /** @type {T[]} */ #contents;
 
   constructor () {
-    this.clear();
+    this.#contents = [];
   }
 
 
-  /** @type {*} */
+  /** @type {T} */
   get next () {
     return this.#contents[this.size - 1];
   }
@@ -19,8 +21,8 @@ const Stack = class {
 
 
   /**
-   * @param {...*} data
-   * @returns {number}
+   * @param {...T} data
+   * @returns {number} size
    * @complexity O(1)
    */
   add (...data) {
@@ -28,7 +30,7 @@ const Stack = class {
   }
 
   /**
-   * @returns {*}
+   * @returns {T} next
    * @complexity O(1)
    */
   remove () {
@@ -40,13 +42,15 @@ const Stack = class {
    * @complexity O(1)
    */
   clear () {
-    this.#contents = [];
+    this.#contents.length = 0;
   }
 
 
-  /** @type {Iterator<*>} */
+  /**
+   * @returns {Iterator<T>}
+   */
   [Symbol.iterator] () {
-    return this.#contents.reverse()[Symbol.iterator]();
+    return this.#contents.toReversed().values();
   }
 };
 export default Stack;

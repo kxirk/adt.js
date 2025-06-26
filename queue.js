@@ -1,16 +1,18 @@
 import LinkedList from "./linked-list.js";
 
 
+/**
+ * @template T
+ */
 const Queue = class {
-  /** @type {LinkedList} */
-  #list;
+  /** @type {LinkedList<T>} */ #list;
 
   constructor () {
     this.#list = new LinkedList();
   }
 
 
-  /** @type {*} */
+  /** @type {T} */
   get next () {
     return this.#list.get(0);
   }
@@ -22,8 +24,8 @@ const Queue = class {
 
 
   /**
-   * @param {...*} data
-   * @returns {number}
+   * @param {...T} data
+   * @returns {number} size
    * @complexity O(1)
    */
   add (...data) {
@@ -31,12 +33,13 @@ const Queue = class {
   }
 
   /**
-   * @returns {*}
+   * @returns {T} next
    * @complexity O(1)
    */
   remove () {
     return this.#list.shift();
   }
+
 
   /**
    * @returns {undefined}
@@ -47,7 +50,9 @@ const Queue = class {
   }
 
 
-  /** @type {Iterator<*>} */
+  /**
+   * @returns {Iterator<T>}
+   */
   [Symbol.iterator] () {
     return this.#list[Symbol.iterator]();
   }
